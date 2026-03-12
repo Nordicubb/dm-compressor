@@ -4,7 +4,6 @@ A command-line program meant to turn audio files into 1-bit delta-modulated 7-bi
 
 You need to install [FFmpeg](https://www.ffmpeg.org/download.html) for this program to work.
 
-Nordicub's NES-Style DPCM Converter v1.1.0 <br>
 USAGE: <br>
 dpcmcomp -i <input file path> \[options] <br>
 OPTIONS: <br>
