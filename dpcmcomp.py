@@ -142,7 +142,6 @@ try:
         for i in range(0, len(frames), step):
             print("Building output file... " + str(math.floor(len(buffer) / wavff.getnframes() * 100)) + "%", end="\r")
             o = frames[i]
-            print(o)
             if wavff.getsampwidth() == 1:
                 v = math.floor(o / 2)
             elif wavff.getsampwidth() == 2:
@@ -157,7 +156,6 @@ try:
                     v = math.floor(o / ((max(frames) - min(frames)) / 127))
             elif wavff.getsampwidth() == 8:
                 v = math.floor(o / ((max(frames) - min(frames)) / 127))
-            print(v)
             if i == 0:
                 a = v
                 b = v
