@@ -12,7 +12,7 @@ OPTIONS: <br>
 -o \<filepath> -- Specifies the output filename. (default = output.wav) <br>
 -q \<0-15> -- Set the internal sample rate using a sample rate table. (default = 15) <br>
 -p -- Use the PAL sample rate table instead of NTSC. <br>
--sr \<sample rate> -- Set the output file's sample rate. (default = 44100) <br>
+-sr \<sample rate or "off"> -- Set the output file's sample rate. If the argument is "off" or 0, set to the internal sample rate. (default = 44100) <br>
 -u -- Do not trim the output file. <br>
 -a -- Double the output file's amplitude. <br>
 -k -- If two consecutive input samples are equal, continue in the same direction instead of reversing.
