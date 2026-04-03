@@ -21,7 +21,7 @@ keep = False
 inname = ""
 outname = "output.wav"
 
-helptxt = "Nordicub's NES-Style DPCM Converter v1.3.0\nUSAGE:\ndpcmcomp -i <input file path> [options]\nOPTIONS:\n--help, -h, -? -- Show this help message.\n-i <filepath with extension> -- Specifies the input file. (required)\n-o <filepath> -- Specifies the output filename. (default = output.wav)\n-q <0-15> -- Set the internal sample rate using a sample rate table. (default = 15)\n-p -- Use the PAL sample rate table instead of NTSC.\n-sr <sample rate or \"off\"> -- Set the output file's sample rate. If the argument is \"off\" or 0, set to the internal sample rate. (default = 44100)\n-u -- Do not trim the output file.\n-a -- Double the output file's amplitude.\n-k -- If two consecutive input samples are equal, continue in the same direction instead of reversing."
+helptxt = "Nordicub's NES-Style DPCM Converter v1.3.1\nUSAGE:\ndpcmcomp -i <input file path> [options]\nOPTIONS:\n--help, -h, -? -- Show this help message.\n-i <filepath with extension> -- Specifies the input file. (required)\n-o <filepath> -- Specifies the output filename. (default = output.wav)\n-q <0-15> -- Set the internal sample rate using a sample rate table. (default = 15)\n-p -- Use the PAL sample rate table instead of NTSC.\n-sr <sample rate or \"off\"> -- Set the output file's sample rate. If the argument is \"off\" or 0, set to the internal sample rate. (default = 44100)\n-u -- Do not trim the output file.\n-a -- Double the output file's amplitude.\n-k -- If two consecutive input samples are equal, continue in the same direction instead of reversing."
 
 
 def usage():
@@ -162,8 +162,23 @@ try:
             elif wavff.getsampwidth() == 8:
                 v = math.floor(o / ((max(frames) - min(frames)) / 127))
             if i == 0:
+                u = frames[1]
+                if wavff.getsampwidth() == 1:
+                    w = math.floor(u / 2)
+                elif wavff.getsampwidth() == 2:
+                    w = math.floor((u / 2 ** 9 + 64))
+                elif wavff.getsampwidth() == 3:
+                    u = (u << 8 | frames[2]) << 8 | frames[3]
+                    w = math.floor((u / 2 ** 17 + 64))
+                elif wavff.getsampwidth() == 4:
+                    if isfloat != "flt":
+                        w = math.floor((u / 2 ** 26 + 64))
+                    else:
+                        w = math.floor(u / ((max(frames) - min(frames)) / 127))
+                elif wavff.getsampwidth() == 8:
+                    w = math.floor(u / ((max(frames) - min(frames)) / 127))
                 a = v
-                b = v
+                b = w
             else:
                 a = b
                 b = v
